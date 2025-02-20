@@ -48,6 +48,8 @@ async def handle_job_description(event):
         
         # Respond with a copyable text block
         await event.respond(f"```{cover_letter}```", parse_mode="markdown")
+    elif response.status_code == 404:
+        await event.respond("Please set up your profile first using /setup_profile.")
     else:
         await event.respond("Failed to generate cover letter. Please try again later.")
 
