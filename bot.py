@@ -19,7 +19,7 @@ async def start(event):
 @bot.on(events.NewMessage(pattern='/setup_profile'))
 async def setup_profile(event):
     user_id = event.sender_id
-    form_link = f"http://127.0.0.1:5000/profile_form?user_id={user_id}"
+    form_link = f"https://cover-letter-writer-bot.onrender.com/profile_form?user_id={user_id}"
     await event.respond(f"Please set up your profile using this form: {form_link}")
 
 @bot.on(events.NewMessage(pattern='/help'))
@@ -41,7 +41,7 @@ async def handle_job_description(event):
 
     await event.respond("Generating cover letter...")
     # Send the job description to the API
-    response = requests.post("http://127.0.0.1:5000/generate_cover_letter", json=user_data)
+    response = requests.post("https://cover-letter-writer-bot.onrender.com/generate_cover_letter", json=user_data)
 
     if response.status_code == 200:
         cover_letter = response.json().get("cover_letter", "Error generating cover letter.")
