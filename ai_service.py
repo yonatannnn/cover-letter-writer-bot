@@ -38,7 +38,7 @@ def generate_cover_letter(user_data, job_description):
     1. A professional opening that introduces the candidate and mentions the role.
     2. A brief paragraph highlighting relevant skills and experiences that match the job description.
     3. A closing paragraph expressing interest in discussing the role further.
-    4. Links to the portfolio and GitHub at the end.
+    4. Links to the portfolio and GitHub at the end but if links are not given dont even talk about the link.
 
     Ensure the tone is professional, concise, and free of AI-like language.
     """
