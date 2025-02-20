@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Up Your Profile</title>
+    <style>
+        :root {
+            --bg-gradient-start: #000000;
+            --bg-gradient-end: #2575fc;
+            --card-bg: #ffffff;
+            --primary-color: #2575fc;
+            --text-color: #000000;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            --hover-color: #1a5bbf;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        input[type="url"],
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            color: #242222;
+        }
+
+        input[type="url"]:focus,
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(37, 117, 252, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            input[type="url"],
+            input[type="text"],
+            textarea,
+            button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Set Up Your Profile</h1>
+        <form id="profileForm">
+            <input type="hidden" id="user_id" name="user_id">
+
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input id="first_name" name="first_name" type="text" required>
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input id="last_name" name="last_name" type="text" required>
+            </div>
+
+            <div class="form-group">
+                <label for="experience">Experience</label>
+                <textarea id="experience" name="experience" rows="4" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="preferences">Preferences</label>
+                <textarea id="preferences" name="preferences" rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="github">GitHub Link (Optional)</label>
+                <input type="url" id="github" name="github">
+            </div>
+
+            <div class="form-group">
+                <label for="portfolio">Portfolio Link (Optional)</label>
+                <input type="url" id="portfolio" name="portfolio">
+            </div>
+
+            <div class="form-group">
+                <label for="additional_info">Additional information (Optional)</label>
+                <textarea id="additional_info" name="additional_info" rows="4"></textarea>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('user_id');
+        document.getElementById('user_id').value = userId;
+
+        async function fetchUserProfile(userId) {
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/get_profile/${userId}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('first_name').value = data.first_name || "";
+                    document.getElementById('last_name').value = data.last_name || "";
+                    document.getElementById('experience').value = data.experience || "";
+                    document.getElementById('preferences').value = data.preferences || "";
+                    document.getElementById('github').value = data.github || "";
+                    document.getElementById('portfolio').value = data.portfolio || "";
+                    document.getElementById('additional_info').value = data.additional_info || "";
+                } else if (data.error !== "User not found") {
+                    alert("Error fetching profile data: " + data.error);
+                }
+            } catch (error) {
+                alert("An error occurred while fetching profile data.");
+                console.error(error);
+            }
+        }
+
+        fetchUserProfile(userId);
+
+        document.getElementById('profileForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/set_profile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                alert(result.message || "Profile updated successfully!");
+                document.getElementById('first_name').value = "";
+                document.getElementById('last_name').value =  "";
+                document.getElementById('experience').value = "";
+                document.getElementById('preferences').value = "";
+                document.getElementById('github').value = "";
+                document.getElementById('portfolio').value = "";
+                document.getElementById('additional_info').value = "";
+            } catch (error) {
+                alert("An error occurred. Please try again.");
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>
