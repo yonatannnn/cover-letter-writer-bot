@@ -14,7 +14,7 @@ user_states = {}
 
 @bot.on(events.NewMessage(pattern='/start'))
 async def start(event):
-    await event.respond("Welcome! Use /set_profile to set up your profile.\n\nCommands:\n/start - Start the bot\n/setup_profile - Set up your profile\n/help - Show this help message\n/generate job_descripition - Generate a cover letter")
+    await event.respond("Welcome!\n\nCommands:\n/start - Start the bot\n/setup_profile - Set up your profile\n/help - Show this help message\n/generate job_descripition - Generate a cover letter")
 
 @bot.on(events.NewMessage(pattern='/setup_profile'))
 async def setup_profile(event):
@@ -24,7 +24,7 @@ async def setup_profile(event):
 
 @bot.on(events.NewMessage(pattern='/help'))
 async def help(event):
-    await event.respond("Commands:\n/start - Start the bot\n/setup_profile - Set up your profile\n/help - Show this help message\n/generate job_descripition - Generate a cover letter")
+    await event.respond("Commands:\n/setup_profile - Set up your profile\n/generate job_descripition - Generate a cover letter")
 
 @bot.on(events.NewMessage(pattern=r'(?s)/generate\s*(.*)'))  
 async def handle_job_description(event):
