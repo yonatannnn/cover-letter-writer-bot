@@ -1,6 +1,11 @@
 from flask import Flask, request, jsonify, send_from_directory
 from database import users_collection
 from ai_service import generate_cover_letter
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+PORT = os.getenv("PORT", 5000)
 
 app = Flask(__name__)
 
@@ -178,4 +183,4 @@ def generate_letter():
     return jsonify({"cover_letter": cover_letter})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True , port=PORT)
