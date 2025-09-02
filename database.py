@@ -5,7 +5,7 @@ MONGO_URI = os.getenv("MONGO_URI")
 
 try:
     # Try connecting to MongoDB
-    client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+    client = MongoClient(MONGO_URI)
     db = client.cover_letter_bot
     users_collection = db.users
 
