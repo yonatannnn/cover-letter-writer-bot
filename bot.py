@@ -53,7 +53,14 @@ async def handle_job_description(event):
     elif response.status_code == 404:
         await event.respond("Please set up your profile first using /setup_profile.")
     else:
-        await event.respond("Failed to generate cover letter. Please try again later.")
+        # Get error details from response
+        try:
+            error_details = response.json()
+            error_message = error_details.get('error', 'Unknown error')
+        except:
+            error_message = f"HTTP {response.status_code}: {response.text}"
+        
+        await event.respond(f"Failed to generate cover letter. Error: {error_message}")
 
 async def main():
     """Main function to run the bot"""
