@@ -21,7 +21,7 @@ async def start(event):
 @bot.on(events.NewMessage(pattern='/setup_profile'))
 async def setup_profile(event):
     user_id = event.sender_id
-    form_link = f"http://localhost/profile_form?user_id={user_id}"
+    form_link = f"https://cover-letter-writer-bot-production.up.railway.app/profile_form?user_id={user_id}"
     await event.respond(f"Please set up your profile using this form: {form_link}")
 
 @bot.on(events.NewMessage(pattern='/help'))
