@@ -2,13 +2,15 @@ from telethon import TelegramClient, events
 import requests
 import os
 from dotenv import load_dotenv
+import asyncio
 
 load_dotenv()
 API_ID = os.getenv("API_ID")
 API_HASH = os.getenv("API_HASH")
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
-bot = TelegramClient('cover_letter_bot', API_ID, API_HASH).start(bot_token=BOT_TOKEN)
+# Create client without starting it immediately
+bot = TelegramClient('cover_letter_bot', API_ID, API_HASH)
 
 user_states = {}
 
@@ -19,7 +21,7 @@ async def start(event):
 @bot.on(events.NewMessage(pattern='/setup_profile'))
 async def setup_profile(event):
     user_id = event.sender_id
-    form_link = f"https://cover-letter-writer-bot-production.up.railway.app/profile_form?user_id={user_id}"
+    form_link = f"http://localhost/profile_form?user_id={user_id}"
     await event.respond(f"Please set up your profile using this form: {form_link}")
 
 @bot.on(events.NewMessage(pattern='/help'))
@@ -53,6 +55,12 @@ async def handle_job_description(event):
     else:
         await event.respond("Failed to generate cover letter. Please try again later.")
 
+async def main():
+    """Main function to run the bot"""
+    print("Starting bot...")
+    await bot.start(bot_token=BOT_TOKEN)
+    print("Bot is running...")
+    await bot.run_until_disconnected()
 
-print("Bot is running...")
-bot.run_until_disconnected()
+if __name__ == "__main__":
+    asyncio.run(main())

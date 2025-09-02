@@ -33,7 +33,7 @@ def generate_cover_letter(user_data, job_description):
     
     2. TONE REQUIREMENTS:
     - Must sound human-written (vary sentence structure, avoid perfect grammar occasionally)
-    - Absolutely NO phrases like: "excited", "eager", "passionate", "proficient", "honed", "leveraged"
+    - Absolutely NO phrases like: "excited", "eager", "passionate", "proficient", "honed", "leveraged", "seamlessly", "
     - No AI clichés like "In a world where...", "As a [job title] with X years..."
     - More concrete achievements than generic skills
     
@@ -67,7 +67,7 @@ def generate_cover_letter(user_data, job_description):
             {"role": "system", "content": "You are a professional resume writer who creates human-sounding, job-specific cover letters that avoid all AI clichés."},
             {"role": "user", "content": prompt}
         ],
-        temperature=0.7  # Slightly higher for more creative variation
+        temperature=0.7
     )
 
     return response.choices[0].message.content
