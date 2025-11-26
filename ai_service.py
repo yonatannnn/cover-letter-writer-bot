@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-def generate_cover_letter(user_data, job_description):
+def generate_project_focused_note(user_data, job_description):
     portfolio = user_data.get("portfolio", "")
     github = user_data.get("github", "")
     experience = user_data.get("experience", "")
@@ -13,50 +13,41 @@ def generate_cover_letter(user_data, job_description):
     last_name = user_data.get("last_name", "")
     preferences = user_data.get("preferences", "")
     additional_info = user_data.get("additional_info", "")
-    opening_phrase = user_data.get("opening_phrase", "")  # New field for custom opening
     
-    # Build links section only if provided
-    links_section = ""
-    if portfolio or github:
-        links_section = "\n\nRelevant Links:\n"
-        if portfolio: links_section += f"Portfolio: {portfolio}\n"
-        if github: links_section += f"GitHub: {github}"
+    # We omit the opening_phrase and links_section builder since the new format integrates links directly into the body.
 
     prompt = f"""
-    Write a professional cover letter strictly following these guidelines:
+    Write a concise, project-driven application note (NOT a traditional cover letter) strictly following these guidelines:
     
-    1. STRUCTURE:
-    - Opening: {f"Use this exact opening phrase if provided: '{opening_phrase}'" if opening_phrase else "Start with a strong, unique professional opening"}
-    - Body: 1-2 paragraphs MAXIMUM showing ONLY the most relevant experience/skills from the candidate that match the job
-    - Closing: Brief professional closing with invitation to discuss further
-    - Links: {links_section if links_section else "Omit links section entirely if no links provided"}
+    1. FORMAT & LENGTH:
+    - Total output must be 100-150 words MAXIMUM.
+    - Omit traditional elements like date, address, and formal salutations (e.g., "Dear Hiring Manager"). Start directly with content.
+    - Use a brief, bulleted list for the main experience/project section.
     
-    2. TONE REQUIREMENTS:
-    - Must sound human-written (vary sentence structure, avoid perfect grammar occasionally)
-    - Absolutely NO phrases like: "excited", "eager", "passionate", "proficient", "honed", "leveraged", "seamlessly", "
-    - No AI clichés like "In a world where...", "As a [job title] with X years..."
-    - More concrete achievements than generic skills
+    2. CONTENT FOCUS:
+    - Opening: A single, brief sentence introducing the candidate and expressing direct interest in the role.
+    - Body (Bulleted): List 2-3 of the candidate's MOST RELEVANT projects or concrete achievements that directly address the job requirements.
+        - Each bullet point MUST integrate a direct link (Portfolio or GitHub) as verifiable proof of work. Prioritize this link integration.
+        - Focus on the *impact*, *scale*, or *specific technology* that matches the job description.
+    - Closing: A single, professional sentence inviting immediate review of the linked projects.
     
-    3. CONTENT RULES:
-    - Only include experience/skills that DIRECTLY match job requirements
-    - For each skill/experience mentioned, show HOW it applies to this specific job
-    - If no relevant experience matches, be honest but highlight transferable skills
-    - Never make up qualifications
+    3. TONE & CLICHÉ AVOIDANCE:
+    - Must be extremely direct, scannable, and professional.
+    - Avoid ALL fluff, generic skills, and narrative prose. The entire goal is to point the reader to the proof of work.
+    - Absolutely NO phrases like: "excited", "eager", "passionate", "proficient", "honed", "leveraged", or any AI clichés.
     
-    Job Description (analyze carefully for requirements):
+    Job Description (analyze carefully for specific technical requirements):
     {job_description}
     
-    Candidate Information (use ONLY what's relevant to the job):
+    Candidate Information (use ONLY what's relevant to the job, prioritize projects and links):
     - Name: {first_name} {last_name}
     - Experience: {experience}
     - Additional Info: {additional_info}
     - Preferences: {preferences}
+    - Portfolio Link: {portfolio}
+    - GitHub Link: {github}
     
-    Important: The cover letter must be:
-    - 200-300 words maximum
-    - Focused solely on job requirements
-    - Professional but not robotic
-    - Completely original phrasing
+    Important: The final output must be a direct, scannable text that immediately highlights related, verifiable work.
     """
 
     client = openai.OpenAI(api_key=OPENAI_API_KEY)
@@ -64,10 +55,10 @@ def generate_cover_letter(user_data, job_description):
     response = client.chat.completions.create(
         model="gpt-4",
         messages=[
-            {"role": "system", "content": "You are a professional resume writer who creates human-sounding, job-specific cover letters that avoid all AI clichés."},
+            {"role": "system", "content": "You are a professional technical recruiter writing an ultra-concise application note. Your sole purpose is to quickly highlight verified work that directly matches the job requirements."},
             {"role": "user", "content": prompt}
         ],
-        temperature=0.7
+        temperature=0.6 # Slightly lower temperature for more direct, structured output
     )
 
     return response.choices[0].message.content
