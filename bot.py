@@ -24,7 +24,7 @@ async def start(event):
 async def setup_profile(event):
     user_id = event.sender_id
     # Ensure this link points to your external service where profile data is managed
-    form_link = f"https://web-production-ec6c45.up.railway.app/profile_form?user_id={user_id}"
+    form_link = f"https://writer-microservice-production.up.railway.app/profile_form?user_id={user_id}"
     await event.respond(f"Please set up your profile using this form: {form_link}")
 
 # --- UPDATED GENERATION LOGIC ---
@@ -112,7 +112,7 @@ async def handle_job_description(event):
     await event.respond("Generating application note...")
     
     # Send the job description to the API on your external server
-    response = requests.post("https://web-production-ec6c45.up.railway.app/generate_cover_letter", json=user_data)
+    response = requests.post("https://writer-microservice-production.up.railway.app/generate_cover_letter", json=user_data)
 
     if response.status_code == 200:
         cover_letter = response.json().get("cover_letter", "Error generating cover letter.")
