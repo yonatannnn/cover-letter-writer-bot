@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-def generate_project_focused_note(user_data, job_description):
+def generate_cover_letter(user_data, job_description):
     portfolio = user_data.get("portfolio", "")
     github = user_data.get("github", "")
     experience = user_data.get("experience", "")
