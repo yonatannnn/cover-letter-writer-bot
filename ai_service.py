@@ -35,6 +35,9 @@ def generate_cover_letter(user_data, job_description):
     - Must be extremely direct, scannable, and professional.
     - Avoid ALL fluff, generic skills, and narrative prose. The entire goal is to point the reader to the proof of work.
     - Absolutely NO phrases like: "excited", "eager", "passionate", "proficient", "honed", "leveraged", or any AI clichés.
+
+    4. choose projects that are most relevant to the job description.
+    5. if the client writes anything specific about the cover letter, you should follow that. i.e if he writes start by saying "bla bla bla" you should start by saying "bla bla bla"
     
     Job Description (analyze carefully for specific technical requirements):
     {job_description}
@@ -46,6 +49,7 @@ def generate_cover_letter(user_data, job_description):
     - Preferences: {preferences}
     - Portfolio Link: {portfolio}
     - GitHub Link: {github}
+
     
     Important: The final output must be a direct, scannable text that immediately highlights related, verifiable work.
     """
