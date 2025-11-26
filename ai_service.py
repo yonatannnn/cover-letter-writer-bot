@@ -19,25 +19,29 @@ def generate_cover_letter(user_data, job_description):
     prompt = f"""
     Write a concise, project-driven application note (NOT a traditional cover letter) strictly following these guidelines:
     
-    1. FORMAT & LENGTH:
+    1. CLIENT INSTRUCTIONS:
+    - Scan the job description for explicit phrasing requirements (e.g., “include ‘I have read the job description.’ at the top”) and repeat them verbatim in the requested spot before writing anything else.
+    - If the client specifies any other structural or content constraints, obey them exactly.
+    
+    2. FORMAT & LENGTH:
     - Total output must be 100-150 words MAXIMUM.
-    - Omit traditional elements like date, address, and formal salutations (e.g., "Dear Hiring Manager"). Start directly with content.
+    - Omit traditional elements like dates, addresses, and salutations. Start directly with content.
     - Use a brief, bulleted list for the main experience/project section.
     
-    2. CONTENT FOCUS:
+    3. CONTENT FOCUS:
     - Opening: A single, brief sentence introducing the candidate and expressing direct interest in the role.
     - Body (Bulleted): List 2-3 of the candidate's MOST RELEVANT projects or concrete achievements that directly address the job requirements.
-        - Each bullet point MUST integrate a direct link (Portfolio or GitHub) as verifiable proof of work. Prioritize this link integration.
-        - Focus on the *impact*, *scale*, or *specific technology* that matches the job description.
+        - Each bullet MUST include a provided Portfolio or GitHub link as proof. If no link exists for that project, describe the work without fabricating a link.
+        - Emphasize the impact, scale, or technologies that match the job description; choose only the most relevant projects.
     - Closing: A single, professional sentence inviting immediate review of the linked projects.
     
-    3. TONE & CLICHÉ AVOIDANCE:
+    4. TONE & CLICHÉ AVOIDANCE:
     - Must be extremely direct, scannable, and professional.
     - Avoid ALL fluff, generic skills, and narrative prose. The entire goal is to point the reader to the proof of work.
     - Absolutely NO phrases like: "excited", "eager", "passionate", "proficient", "honed", "leveraged", or any AI clichés.
-
-    4. choose projects that are most relevant to the job description.
-    5. if the client writes anything specific about the cover letter, you should follow that. i.e if he writes start by saying "bla bla bla" you should start by saying "bla bla bla"
+    
+    5. DATA HYGIENE:
+    - Never output placeholder tokens such as [name] or [company]. If data is missing, omit that detail rather than leaving blanks.
     
     Job Description (analyze carefully for specific technical requirements):
     {job_description}
