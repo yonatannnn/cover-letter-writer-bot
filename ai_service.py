@@ -22,9 +22,10 @@ def generate_cover_letter(user_data, job_description):
 1. FORMAT:
    - No greetings like “Hi” or “Dear Client.”
    - Start immediately with one sentence that matches the client’s main need.
-   - Keep the total proposal under 130 words.
+   - Keep the total proposal under 180 words.
 
 2. CONTENT RULES:
+   - Opening: a statement expressing direct interest in the role.
    - Focus ONLY on what the client asked for — no generic skills, no filler.
    - Include 2–3 bullet points showing directly relevant experience or projects.
    - Each bullet must reference real past work. If a link is provided, include the RAW URL only (no markdown, no parentheses, no brackets).
@@ -63,7 +64,7 @@ Candidate Information (use ONLY what's relevant to the job, prioritize projects 
             {"role": "system", "content": "You are a professional technical recruiter writing an ultra-concise application note. Your sole purpose is to quickly highlight verified work that directly matches the job requirements."},
             {"role": "user", "content": prompt}
         ],
-        temperature=0.6 # Slightly lower temperature for more direct, structured output
+        temperature=0.6 
     )
 
     return response.choices[0].message.content
