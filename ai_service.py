@@ -17,39 +17,35 @@ def generate_cover_letter(user_data, job_description):
     # We omit the opening_phrase and links_section builder since the new format integrates links directly into the body.
 
     prompt = f"""
-    Write a concise application note acting as me (NOT a traditional cover letter) strictly following these guidelines:
-    
-    1. CLIENT INSTRUCTIONS:
-    - Scan the job description for explicit phrasing requirements and repeat them verbatim in the requested spot before writing anything else if the client do not write anything do not write it.
-    
-    2. FORMAT & LENGTH:
-    - Omit traditional elements like dates, addresses, and salutations. Start directly with content.
-    
-    3. CONTENT FOCUS:
-    - Opening: a statement expressing direct interest in the role.
-    - Body (Bulleted): include 2-3 candidate's MOST RELEVANT projects or concrete achievements that directly address the job requirements.
-        - Each bullet should include the plain URL of the related Portfolio or GitHub link as proof (raw URL only, no markdown). If no link exists for that project, describe the work without fabricating a link.
-        - Emphasize the impact, scale, or technologies that match the job description; choose only the most relevant projects.
-    - Closing: A single, professional sentence inviting immediate review of the linked projects and if provided add a profile github and portfolio link.
-    
-    4. TONE & CLICHÉ AVOIDANCE:
-    - Must be extremely direct, scannable, and professional.
-    - Avoid ALL fluff, generic skills, and narrative prose. The entire goal is to point the reader to the proof of work.
-    - Absolutely NO phrases like: "excited", "eager", "passionate", "proficient", "honed", "leveraged", or any AI clichés.
-    
-    5. DATA HYGIENE:
-    - Never output placeholder tokens such as [name] or [company]. If data is missing, omit that detail rather than leaving blanks.
+    Write a short, ultra-clear Upwork proposal strictly following these rules:
 
-    6. LINK FORMAT (VERY IMPORTANT):
-   - All links must be printed ONLY as plain URLs, with no additional formatting.
-   - Do NOT wrap links in brackets, parentheses, quotes, markdown, or text labels.
-   - Output links exactly like: http://example.com
+1. FORMAT:
+   - No greetings like “Hi” or “Dear Client.”
+   - Start immediately with one sentence that matches the client’s main need.
+   - Keep the total proposal under 130 words.
 
-    
-    Job Description (analyze carefully for specific technical requirements):
-    {job_description}
-    
-    Candidate Information (use ONLY what's relevant to the job, prioritize projects and links):
+2. CONTENT RULES:
+   - Focus ONLY on what the client asked for — no generic skills, no filler.
+   - Include 2–3 bullet points showing directly relevant experience or projects.
+   - Each bullet must reference real past work. If a link is provided, include the RAW URL only (no markdown, no parentheses, no brackets).
+   - Do NOT make up achievements or fabricate links.
+
+3. TONE:
+   - Direct, confident, solution-oriented.
+   - No clichés: avoid “passionate,” “eager,” “excited,” “skilled,” “expert,” etc.
+   - No storytelling — only facts that prove capability.
+
+4. CLOSING:
+   - End with one short sentence offering to start immediately or clarify requirements.
+
+5. LINK RULES (IMPORTANT):
+   - All links must be printed ONLY as plain URLs (example: https://example.com).
+   - Never use markdown formats like [ ] or ( ).
+
+Here is the job description (analyze carefully and extract the core needs):
+{job_description}
+
+Candidate Information (use ONLY what's relevant to the job, prioritize projects and links):
     - Name: {first_name} {last_name}
     - Experience: {experience}
     - Additional Info: {additional_info}
@@ -57,8 +53,6 @@ def generate_cover_letter(user_data, job_description):
     - Portfolio Link: {portfolio}
     - GitHub Link: {github}
 
-    
-    Important: The final output must be a direct, scannable text that immediately highlights related, verifiable work.
     """
 
     client = openai.OpenAI(api_key=OPENAI_API_KEY)
