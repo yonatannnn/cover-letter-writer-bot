@@ -17,11 +17,10 @@ def generate_cover_letter(user_data, job_description):
     # We omit the opening_phrase and links_section builder since the new format integrates links directly into the body.
 
     prompt = f"""
-    Write a concise, project-driven application note (NOT a traditional cover letter) strictly following these guidelines:
+    Write a concise application note (NOT a traditional cover letter) strictly following these guidelines:
     
     1. CLIENT INSTRUCTIONS:
-    - Scan the job description for explicit phrasing requirements (e.g., “include ‘I have read the job description.’ at the top”) and repeat them verbatim in the requested spot before writing anything else.
-    - If the client specifies any other structural or content constraints, obey them exactly.
+    - Scan the job description for explicit phrasing requirements and repeat them verbatim in the requested spot before writing anything else if the client do not write anything do not write it.
     
     2. FORMAT & LENGTH:
     - Total output must be 100-150 words MAXIMUM.
@@ -30,8 +29,8 @@ def generate_cover_letter(user_data, job_description):
     
     3. CONTENT FOCUS:
     - Opening: A single, brief sentence introducing the candidate and expressing direct interest in the role.
-    - Body (Bulleted): List 2-3 of the candidate's MOST RELEVANT projects or concrete achievements that directly address the job requirements.
-        - Each bullet MUST include a provided Portfolio or GitHub link as proof. If no link exists for that project, describe the work without fabricating a link.
+    - Body (Bulleted): include 2-3 of the candidate's MOST RELEVANT projects or concrete achievements that directly address the job requirements.
+        - Each bullet should include a provided Portfolio or GitHub link as proof. If no link exists for that project, describe the work without fabricating a link.
         - Emphasize the impact, scale, or technologies that match the job description; choose only the most relevant projects.
     - Closing: A single, professional sentence inviting immediate review of the linked projects.
     
@@ -42,6 +41,8 @@ def generate_cover_letter(user_data, job_description):
     
     5. DATA HYGIENE:
     - Never output placeholder tokens such as [name] or [company]. If data is missing, omit that detail rather than leaving blanks.
+
+    6, Do not use the marks like "(" , ")" , "[" , "]"
     
     Job Description (analyze carefully for specific technical requirements):
     {job_description}

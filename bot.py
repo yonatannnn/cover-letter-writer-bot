@@ -44,18 +44,16 @@ def generate_application_note(user_data, job_description):
     # We remove 'opening_phrase' as the new format is ultra-concise and direct.
 
     prompt = f"""
-    Write a concise, project-driven application note (NOT a traditional cover letter) strictly following these guidelines:
+    Write a concise application note (NOT a traditional cover letter) strictly following these guidelines:
     
     1. FORMAT & LENGTH:
-    -   
     - Omit traditional elements like date, address, and formal salutations. Start directly with content.
     - Use a brief, bulleted list for the main experience/project section (2-3 items).
     
     2. CONTENT FOCUS:
     - Opening: A single, brief sentence introducing the candidate and expressing direct interest in the role.
-    - Body (Bulleted): List 2-3 of the candidate's MOST RELEVANT projects or concrete achievements that directly address the job requirements.
-        - Each bullet point MUST integrate a direct link (e.g., [Project Name](link_to_github_or_portfolio)) as verifiable proof of work. Prioritize this link integration.
-        - Focus on the *impact*, *scale*, or *specific technology* that matches the job description.
+    - Body (Bulleted): include 2-3 of the candidate's MOST RELEVANT projects or concrete achievements that directly address the job requirements.
+        - Each bullet point should integrate a direct link (e.g., Project Name link_to_github_or_portfolio) as verifiable proof of work. Prioritize this link integration.
     - Closing: A single, professional sentence inviting immediate review of the linked projects.
     
     3. TONE & CLICHÉ AVOIDANCE:
