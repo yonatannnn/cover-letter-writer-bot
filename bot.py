@@ -44,22 +44,34 @@ def generate_application_note(user_data, job_description):
     # We remove 'opening_phrase' as the new format is ultra-concise and direct.
 
     prompt = f"""
-    Write a concise application note (NOT a traditional cover letter) strictly following these guidelines:
+    Write a concise application note acting as me (NOT a traditional cover letter) strictly following these guidelines:
     
-    1. FORMAT & LENGTH:
-    - Omit traditional elements like date, address, and formal salutations. Start directly with content.
-    - Use a brief, bulleted list for the main experience/project section (2-3 items).
+    1. CLIENT INSTRUCTIONS:
+    - Scan the job description for explicit phrasing requirements and repeat them verbatim in the requested spot before writing anything else if the client do not write anything do not write it.
     
-    2. CONTENT FOCUS:
-    - Opening: A single, brief sentence introducing the candidate and expressing direct interest in the role.
-    - Body (Bulleted): include 2-3 of the candidate's MOST RELEVANT projects or concrete achievements that directly address the job requirements.
-        - Each bullet point should integrate a direct link (e.g., Project Name link_to_github_or_portfolio) as verifiable proof of work. Prioritize this link integration.
-    - Closing: A single, professional sentence inviting immediate review of the linked projects.
+    2. FORMAT & LENGTH:
+    - Omit traditional elements like dates, addresses, and salutations. Start directly with content.
     
-    3. TONE & CLICHÉ AVOIDANCE:
+    3. CONTENT FOCUS:
+    - Opening: a statement expressing direct interest in the role.
+    - Body (Bulleted): include 2-3 candidate's MOST RELEVANT projects or concrete achievements that directly address the job requirements.
+        - Each bullet should include the plain URL of the related Portfolio or GitHub link as proof (raw URL only, no markdown). If no link exists for that project, describe the work without fabricating a link.
+        - Emphasize the impact, scale, or technologies that match the job description; choose only the most relevant projects.
+    - Closing: A single, professional sentence inviting immediate review of the linked projects and if provided add a profile github and portfolio link.
+    
+    4. TONE & CLICHÉ AVOIDANCE:
     - Must be extremely direct, scannable, and professional.
     - Avoid ALL fluff, generic skills, and narrative prose. The entire goal is to point the reader to the proof of work.
-    - Absolutely NO phrases like: "excited", "eager", "passionate", "proficient", "honed", "leveraged", "seamlessly", or any AI clichés.
+    - Absolutely NO phrases like: "excited", "eager", "passionate", "proficient", "honed", "leveraged", or any AI clichés.
+    
+    5. DATA HYGIENE:
+    - Never output placeholder tokens such as [name] or [company]. If data is missing, omit that detail rather than leaving blanks.
+
+    6. LINK FORMAT (VERY IMPORTANT):
+   - All links must be printed ONLY as plain URLs, with no additional formatting.
+   - Do NOT wrap links in brackets, parentheses, quotes, markdown, or text labels.
+   - Output links exactly like: http://example.com
+
     
     Job Description (analyze carefully for specific technical requirements):
     {job_description}
@@ -71,6 +83,7 @@ def generate_application_note(user_data, job_description):
     - Preferences: {preferences}
     - Portfolio Link: {portfolio}
     - GitHub Link: {github}
+
     
     Important: The final output must be a direct, scannable text that immediately highlights related, verifiable work.
     """

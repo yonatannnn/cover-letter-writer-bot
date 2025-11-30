@@ -28,7 +28,7 @@ def generate_cover_letter(user_data, job_description):
     3. CONTENT FOCUS:
     - Opening: a statement expressing direct interest in the role.
     - Body (Bulleted): include 2-3 candidate's MOST RELEVANT projects or concrete achievements that directly address the job requirements.
-        - Each bullet should include a provided Portfolio or GitHub link as proof. If no link exists for that project, describe the work without fabricating a link.
+        - Each bullet should include the plain URL of the related Portfolio or GitHub link as proof (raw URL only, no markdown). If no link exists for that project, describe the work without fabricating a link.
         - Emphasize the impact, scale, or technologies that match the job description; choose only the most relevant projects.
     - Closing: A single, professional sentence inviting immediate review of the linked projects and if provided add a profile github and portfolio link.
     
@@ -40,7 +40,11 @@ def generate_cover_letter(user_data, job_description):
     5. DATA HYGIENE:
     - Never output placeholder tokens such as [name] or [company]. If data is missing, omit that detail rather than leaving blanks.
 
-    6, Do not use the marks like "(" , ")" , "[" , "]" when writing the links in the final output .
+    6. LINK FORMAT (VERY IMPORTANT):
+   - All links must be printed ONLY as plain URLs, with no additional formatting.
+   - Do NOT wrap links in brackets, parentheses, quotes, markdown, or text labels.
+   - Output links exactly like: http://example.com
+
     
     Job Description (analyze carefully for specific technical requirements):
     {job_description}
