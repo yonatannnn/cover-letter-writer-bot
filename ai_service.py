@@ -35,7 +35,6 @@ def generate_cover_letter(user_data, job_description):
    - Include links to 1-4 projects that are similar to this job and use similar tech stack.
    - Each project link should be a plain URL only (no markdown, no brackets, no parentheses).
    - Briefly mention what makes each project relevant (tech stack, problem solved, or similar scope).
-   - Format: "Similar project using [tech stack]: [URL]"
    - If portfolio or GitHub links are provided, prioritize those that match the job requirements.
 
 4. THE CALL TO ACTION (The Closer):
