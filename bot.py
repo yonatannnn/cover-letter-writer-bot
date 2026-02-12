@@ -44,36 +44,53 @@ def generate_application_note(user_data, job_description):
     # We remove 'opening_phrase' as the new format is ultra-concise and direct.
 
     prompt = f"""
-    Write a concise application note acting as me (NOT a traditional cover letter) strictly following these guidelines:
+    Write a cover letter following the "Hook-Value-Proof" format strictly:
     
     1. CLIENT INSTRUCTIONS:
     - Scan the job description for explicit phrasing requirements and repeat them verbatim in the requested spot before writing anything else if the client do not write anything do not write it.
     
-    2. FORMAT & LENGTH:
-    - Omit traditional elements like dates, addresses, and salutations. Start directly with content.
+    2. THE HOOK (First 2 lines):
+    - DO NOT start with "Hi, my name is..." or "Dear Client" - they can see your name on your profile.
+    - Start by acknowledging their SPECIFIC problem mentioned in the job description.
+    - Example format: "I saw you're looking to [specific problem from job description]—I just helped [similar client/project] do exactly that [timeframe]."
+    - Make it personal and specific to their needs.
     
-    3. CONTENT FOCUS:
-    - Opening: a statement expressing direct interest in the role.
-    - Body (Bulleted): include 2-3 candidate's MOST RELEVANT projects or concrete achievements that directly address the job requirements.
-        - Each bullet should include the plain URL of the related Portfolio or GitHub link as proof (raw URL only, no markdown). If no link exists for that project, describe the work without fabricating a link.
-        - Emphasize the impact, scale, or technologies that match the job description; choose only the most relevant projects.
-    - Closing: A single, professional sentence inviting immediate review of the linked projects and if provided add a profile github and portfolio link.
+    3. THE VALUE (The Solution):
+    - Briefly explain how you will solve their problem.
+    - Use "You" more than "I" - focus on what they will get.
+    - Example: "You'll get [specific solution/benefit] that will [outcome]."
+    - Keep this section concise and solution-focused.
     
-    4. TONE & CLICHÉ AVOIDANCE:
+    4. THE PROOF (The Flex):
+    - Include links to 1-2 projects that are similar to this job and use similar tech stack.
+    - Each project link should be a plain URL only (no markdown, no brackets, no parentheses).
+    - Briefly mention what makes each project relevant (tech stack, problem solved, or similar scope).
+    - Format: "Similar project using [tech stack]: [URL]"
+    - If portfolio or GitHub links are provided, prioritize those that match the job requirements.
+    - Do NOT make up or fabricate links - only use provided portfolio/GitHub links.
+    
+    5. THE CALL TO ACTION (The Closer):
+    - End with a specific question to get them talking.
+    - Make it relevant to their project or needs.
+    - Examples: "What's your biggest challenge with [specific aspect]?" or "When are you looking to launch this?"
+    - Avoid generic questions like "Can we discuss further?"
+    
+    6. TONE & CLICHÉ AVOIDANCE:
     - Must be extremely direct, scannable, and professional.
-    - Avoid ALL fluff, generic skills, and narrative prose. The entire goal is to point the reader to the proof of work.
+    - Avoid ALL fluff, generic skills, and narrative prose.
     - Absolutely NO phrases like: "excited", "eager", "passionate", "proficient", "honed", "leveraged", or any AI clichés.
+    - Keep total length under 200 words.
     
-    5. DATA HYGIENE:
+    7. DATA HYGIENE:
     - Never output placeholder tokens such as [name] or [company]. If data is missing, omit that detail rather than leaving blanks.
 
-    6. LINK FORMAT (VERY IMPORTANT):
-   - All links must be printed ONLY as plain URLs, with no additional formatting.
-   - Do NOT wrap links in brackets, parentheses, quotes, markdown, or text labels.
-   - Output links exactly like: http://example.com
+    8. LINK FORMAT (VERY IMPORTANT):
+    - All links must be printed ONLY as plain URLs, with no additional formatting.
+    - Do NOT wrap links in brackets, parentheses, quotes, markdown, or text labels.
+    - Output links exactly like: http://example.com
 
     
-    Job Description (analyze carefully for specific technical requirements):
+    Job Description (analyze carefully for specific problem, tech stack, and requirements):
     {job_description}
     
     Candidate Information (use ONLY what's relevant to the job, prioritize projects and links):
@@ -85,7 +102,7 @@ def generate_application_note(user_data, job_description):
     - GitHub Link: {github}
 
     
-    Important: The final output must be a direct, scannable text that immediately highlights related, verifiable work.
+    Important: The final output must follow the Hook-Value-Proof format and immediately highlight related, verifiable work.
     """
 
     client = openai.OpenAI(api_key=OPENAI_API_KEY)
@@ -93,7 +110,7 @@ def generate_application_note(user_data, job_description):
     response = client.chat.completions.create(
         model="gpt-4", # gpt-4 is generally better for complex prompt adherence
         messages=[
-            {"role": "system", "content": "You are a professional technical recruiter writing an ultra-concise application note. Your sole purpose is to quickly highlight verified work that directly matches the job requirements."},
+            {"role": "system", "content": "You are a professional cover letter writer using the Hook-Value-Proof format. Your purpose is to acknowledge the client's problem, offer a solution, provide proof through similar projects, and end with an engaging question."},
             {"role": "user", "content": prompt}
         ],
         temperature=0.6 # Lowered temperature for more structure

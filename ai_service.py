@@ -17,33 +17,47 @@ def generate_cover_letter(user_data, job_description):
     # We omit the opening_phrase and links_section builder since the new format integrates links directly into the body.
 
     prompt = f"""
-    Write a short, ultra-clear Upwork proposal strictly following these rules:
+    Write a cover letter following the "Hook-Value-Proof" format strictly:
 
-1. FORMAT:
-   - No greetings like “Hi” or “Dear Client.”
-   - Start immediately with one sentence that matches the client’s main need.
-   - Keep the total proposal under 180 words.
+1. THE HOOK (First 2 lines):
+   - DO NOT start with "Hi, my name is..." or "Dear Client" - they can see my name on my profile.
+   - Start by acknowledging their SPECIFIC problem mentioned in the job description.
+   - Example format: "I saw you're looking to [specific problem from job description]—I just helped [similar client/project] do exactly that [timeframe]."
+   - Make it personal and specific to their needs.
 
-2. CONTENT RULES:
-   - Opening: a statement expressing direct interest in the role.
-   - Focus ONLY on what the client asked for — no generic skills, no filler.
-   - Include 2–3 bullet points showing directly relevant experience or projects.
-   - Each bullet must reference real past work. If a link is provided, include the RAW URL only (no markdown, no parentheses, no brackets).
-   - Do NOT make up achievements or fabricate links.
+2. THE VALUE (The Solution):
+   - Briefly explain how you will solve their problem.
+   - Use "You" more than "I" - focus on what they will get.
+   - Example: "You'll get [specific solution/benefit] that will [outcome]."
+   - Keep this section concise and solution-focused.
 
-3. TONE:
+3. THE PROOF (The Flex):
+   - Include links to 1-4 projects that are similar to this job and use similar tech stack.
+   - Each project link should be a plain URL only (no markdown, no brackets, no parentheses).
+   - Briefly mention what makes each project relevant (tech stack, problem solved, or similar scope).
+   - Format: "Similar project using [tech stack]: [URL]"
+   - If portfolio or GitHub links are provided, prioritize those that match the job requirements.
+
+4. THE CALL TO ACTION (The Closer):
+   - End with a specific question to get them talking.
+   - Make it relevant to their project or needs.
+   - Examples: "What's your biggest challenge with [specific aspect]?" or "When are you looking to launch this?"
+   - Avoid generic questions like "Can we discuss further?"
+
+5. TONE & STYLE:
    - Direct, confident, solution-oriented.
    - No clichés: avoid “passionate,” “eager,” “excited,” “skilled,” “expert,” etc.
    - No storytelling — only facts that prove capability.
+   - No clichés: avoid "passionate," "eager," "excited," "skilled," "expert," etc.
+   - Keep total length under 200 words.
+   - Focus on their needs, not your background.
 
-4. CLOSING:
-   - End with one short sentence offering to start immediately or clarify requirements.
-
-5. LINK RULES (IMPORTANT):
+6. LINK RULES (IMPORTANT):
    - All links must be printed ONLY as plain URLs (example: https://example.com).
    - Never use markdown formats like [ ] or ( ).
+   - Do NOT make up or fabricate links - only use provided portfolio/GitHub links.
 
-Here is the job description (analyze carefully and extract the core needs):
+Here is the job description (analyze carefully and extract the core problem, tech stack, and requirements):
 {job_description}
 
 Candidate Information (use ONLY what's relevant to the job, prioritize projects and links):
@@ -61,7 +75,7 @@ Candidate Information (use ONLY what's relevant to the job, prioritize projects 
     response = client.chat.completions.create(
         model="gpt-4",
         messages=[
-            {"role": "system", "content": "You are a professional technical recruiter writing an ultra-concise application note. Your sole purpose is to quickly highlight verified work that directly matches the job requirements."},
+            {"role": "system", "content": "You are a professional cover letter writer using the Hook-Value-Proof format. Your purpose is to acknowledge the client's problem, offer a solution, provide proof through similar projects, and end with an engaging question."},
             {"role": "user", "content": prompt}
         ],
         temperature=0.6 
